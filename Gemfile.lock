@@ -29,6 +29,10 @@ GEM
       rack (~> 2.0)
       rack-protection (= 2.0.5)
       tilt (~> 2.0)
+    sorbet (0.4.4358)
+      sorbet-static (= 0.4.4358)
+    sorbet-runtime (0.4.4358)
+    sorbet-static (0.4.4358-universal-darwin-14)
     tilt (2.0.9)
     unicode-display_width (1.6.0)
 
@@ -39,6 +43,8 @@ DEPENDENCIES
   pry (~> 0.12.2)
   rubocop
   sinatra
+  sorbet
+  sorbet-runtime
 
 BUNDLED WITH
    2.0.1

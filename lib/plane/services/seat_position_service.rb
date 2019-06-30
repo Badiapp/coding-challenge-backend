@@ -1,3 +1,4 @@
+# typed: true
 # frozen_string_literal: true
 
 require_relative './find_lane_service.rb'
