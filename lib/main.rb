@@ -1,20 +1,20 @@
 # frozen_string_literal: true
 
-require_relative 'plane/base.rb'
-require_relative 'plane/long_range.rb'
-require_relative 'plane/short_range.rb'
-require_relative 'plane/services/seat_position_service.rb'
-require_relative 'booking/base.rb'
-require_relative 'booking/services/find_seat_service.rb'
+require_relative 'bookings.rb'
+require_relative 'planes.rb'
 
-plane = Plane::LongRange.new('AR123')
-booking = Booking::Base.new(plane)
-puts booking.id
+plane = Planes.new(:short_range, 'AR123').create
+booking = Bookings.new(plane)
 
-puts booking.seat('B15').inspect
+puts "booking.id: #{booking.id}"
+# puts booking.id
+
+puts "booking.seat('B15').inspect: #{booking.seat('B15').inspect}"
+# puts booking.seat('B15').inspect
 # nil
 
-puts booking.book!('B15', 'Marco')
+puts "booking.book!('B15', 'Marco'): #{booking.book!('B15', 'Marco')}"
+# puts booking.book!('B15', 'Marco')
 # true
 
 # puts booking.book!('B15', 'Marco')
@@ -22,14 +22,17 @@ puts booking.book!('B15', 'Marco')
 #         from /Users/mtanzi/work/code/backend-challenge/lib/booking/base.rb:28:in `book!'
 #         from lib/main.rb:15:in `<main>'
 
-puts booking.booked?('B15')
+puts "booking.booked?('B15'): #{booking.booked?('B15')}"
+# puts booking.booked?('B15')
 # true
 
-puts booking.seat('B15')
+puts "booking.seat('B15'): #{booking.seat('B15')}"
+# puts booking.seat('B15')
 # Marco
 
-puts booking.unbook!('B15')
+puts "booking.unbook!('B15'): #{booking.unbook!('B15')}"
+# putsbooking.unbook!('B15')
 # true
 
-puts booking.booked?('B15')
+puts "booking.booked?('B15'): #{booking.booked?('B15')}"
 # false
