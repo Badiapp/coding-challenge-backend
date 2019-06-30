@@ -13,8 +13,6 @@ module Booking
       lanes.each_with_index do |(position, columns), index|
         @position[index] = Booking::Lane.new(position, columns, rows)
       end
-      # @position = position
-      # @seats = create_seats(columns, rows)
     end
   end
 end

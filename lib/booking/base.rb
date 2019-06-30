@@ -1,15 +1,17 @@
 # frozen_string_literal: true
 
+require 'securerandom'
 require_relative 'board.rb'
 
 module Booking
+  BookingError = Class.new(StandardError)
   # :nodoc:
   class Base
-    attr_accessor :board
+    attr_accessor :id, :board, :plane
 
     def initialize(plane)
+      @plane = plane
       @id = generate_id
-      @number = plane.number
       @board = create_board(plane.lanes, plane.rows)
     end
 
@@ -21,8 +23,10 @@ module Booking
     #   irb> Booking::Base.book('A12')
     #   => true
     #
-    def book(seat, name)
-      # TODO
+    def book!(seat_position, name)
+      seat = find_seat(seat_position)
+
+      seat.book!(name)
     end
 
     # The booked? method returns a boolean describing the status of the seat,
@@ -33,25 +37,39 @@ module Booking
     #   irb> Booking::Base.booked?('A12')
     #   => true
     #
-    def booked?(seat)
-      # TODO
+    def booked?(seat_position)
+      seat = find_seat(seat_position)
+
+      seat.booked?
     end
 
-    def generate_id
-      
+    def unbook!(seat_position)
+      seat = find_seat(seat_position)
+
+      seat.unbook!
+    end
+
+    def seat(seat_position)
+      seat = find_seat(seat_position)
+
+      seat.who?
     end
 
     private
 
+    # The booking reference contain teh plane number and a random generated
+    # string to garante the uniqueness.
+    def generate_id
+      "#{@plane.number}-#{SecureRandom.hex(4)}"
+    end
+
     def create_board(lanes, rows)
       Booking::Board.new(lanes, rows)
-      # grid = Array.new(lanes.count)
-      #
-      # lanes.each_with_index do |(position, columns), index|
-      #   grid[index] = Booking::Lane.new(position, columns, rows)
-      # end
-      #
-      # grid
+    end
+
+    def find_seat(seat_position)
+      @find_seat ||=
+        Booking::Services::FindSeatService.new(self, seat_position).call
     end
   end
 end

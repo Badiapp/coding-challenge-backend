@@ -3,27 +3,33 @@
 require_relative 'plane/base.rb'
 require_relative 'plane/long_range.rb'
 require_relative 'plane/short_range.rb'
+require_relative 'plane/services/seat_position_service.rb'
 require_relative 'booking/base.rb'
+require_relative 'booking/services/find_seat_service.rb'
 
 plane = Plane::LongRange.new('AR123')
-# puts s.inspect
-
 booking = Booking::Base.new(plane)
+puts booking.id
 
-# binding.pry
-puts booking.board.position[2].seats[0][1]
+puts booking.seat('B15').inspect
+# nil
 
-# booking.book('A12')
-# ~> true
+puts booking.book!('B15', 'Marco')
+# true
 
-# booking.book('A12')
-# ~> Booking::Error("The seat is already booked.")
+# puts booking.book!('B15', 'Marco')
+# /Users/mtanzi/work/code/backend-challenge/lib/booking/seat.rb:20:in `book!': Seat already booked (Booking::BookingError)
+#         from /Users/mtanzi/work/code/backend-challenge/lib/booking/base.rb:28:in `book!'
+#         from lib/main.rb:15:in `<main>'
 
-# booking.booked?('A12')
-# ~> true
+puts booking.booked?('B15')
+# true
 
-# booking.booked?('A13')
-# ~> false
+puts booking.seat('B15')
+# Marco
 
-# booking.booked?('A99')
-# ~> Booking::Error("The seat does not exist.")
+puts booking.unbook!('B15')
+# true
+
+puts booking.booked?('B15')
+# false

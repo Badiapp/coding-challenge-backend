@@ -11,5 +11,25 @@ module Booking
       @row = row
       @booked = nil
     end
+
+    def booked?
+      !@booked.nil?
+    end
+
+    def book!(name)
+      raise Booking::BookingError, 'Seat already booked' if booked?
+
+      @booked = name
+      true
+    end
+
+    def unbook!
+      @booked = nil
+      true
+    end
+
+    def who?
+      @booked
+    end
   end
 end
