@@ -1,12 +1,16 @@
 # typed: true
 # frozen_string_literal: true
 
+require 'sorbet-runtime'
 require 'securerandom'
+
 require_relative 'booking/board.rb'
 require_relative 'booking/services/find_seat_service.rb'
 
 # :nodoc:
 class Bookings
+  extend T::Sig
+
   attr_accessor :id, :board, :plane, :board_index
 
   def initialize(plane)
@@ -23,6 +27,7 @@ class Bookings
   #   irb> Booking::Base.book!('A12')
   #   => true
   #
+  sig { params(seat_position: String, name: String).returns(T::Boolean) }
   def book!(seat_position, name)
     seat = find_seat(seat_position)
 
@@ -37,6 +42,7 @@ class Bookings
   #   irb> Booking::Base.booked?('A12')
   #   => true
   #
+  sig { params(seat_position: String).returns(T::Boolean) }
   def booked?(seat_position)
     seat = find_seat(seat_position)
 
@@ -51,6 +57,7 @@ class Bookings
   #   irb> Booking::Base.unbook!('A12')
   #   => true
   #
+  sig { params(seat_position: String).returns(T::Boolean) }
   def unbook!(seat_position)
     seat = find_seat(seat_position)
 
@@ -65,6 +72,7 @@ class Bookings
   #   irb> Booking::Base.unbook!('A12')
   #   => true
   #
+  sig { params(seat_position: String).returns(T.nilable(String)) }
   def seat(seat_position)
     seat = find_seat(seat_position)
 
