@@ -18,7 +18,7 @@ class Planes
     @code = code
   end
 
-  sig { returns(T.any(Plane::LongRange, Plane::ShortRange)) }
+  sig { returns(T.any(Plane::LongRange, Plane::ShortRange, Plane::PlaneError)) }
   def create
     if @type == :long_range
       Plane::LongRange.new(@code)
