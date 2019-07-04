@@ -2,36 +2,87 @@
 
 Badi flight company needs to add a booking system to the current application.
 
-Our fleet is composed by 2 types of aircraft:
-
+Currently the Badi fleet is composed only by a short range plane that has the following characteristics:
 
 | Aircraft Type | Sits Count  | Rows        | Row Arrangement          |
 |---------------|-------------|-------------|--------------------------|
 | :short_range  | 156         | 26          | A B C _ D E F            |
-| :long_range   | 360         | 36          | A B C _ D E F G _ H I J  |
 
 
-The task is to write the logic that describe the booking service.
+The service:
 
-The booking service should be versatile to be working for both `:short_range` and `:long_range` flights
+- Doesn't have any database support.
+- Should be designed to expose an interface that allows separate components to interact with it
 
-The booking system allows to receive a multiple seats request.
+Interface example
 
-When the service receives a multiple seats request, it should chose the seats following the rules described below:
+```ruby
+# Book a seat position for the given user
+#
+# Example:
+#   /> booking.book('B15', 'Marco')
+#   => true
+#
+#  @params [String] seat_position
+#  @params [String] passenger_name
+#  @return [Boolean]
+booking.book(seat_position, passenger_name)
 
-- If the number of person is inferior of the lane size, you should sit them all in line
-- [Optional] If the number of person is greater then the lane size, you should place the seat nearby on multiple lanes. (Ex. for a short range airplane if we book 4 places they can be set an B1, C1, B2, C2)
+# Check if a seat position is booked
+#
+# Example:
+#   /> booking.booked?('B15')
+#   => true
+#
+#  @params [String] seat_position
+#  @return [Boolean]
+booking.booked?(seat_position)
 
-The service should expose the following interface:
+# Return the name of the user that booked the given seat
+#
+# Example:
+#   /> booking.seat('B15')
+#   => Marco
+#
+#  @params [String] seat_position
+#  @return [Boolean]
+booking.seat(seat_position)
 
-- Create new booking.
-- Book one or more seats.
-- Show if the give seat is booked.
-- Cancel a booking from the given booking reference.
-- Show the seats disposition.
+# Cancel the booking for the given seat
+#
+# Example:
+#   /> booking.seat('B15')
+#   => Marco
+#
+#  @params [String] seat_position
+#  @return [Boolean]
+booking.unbook!(seat_position)
+# true
+
+# Show the plane status printing in console the grid of the seats printing `0`
+# for empty seats and `X` for booked. The aisle will be showed with the `_`
+# symbol.
+#
+# Example:
+#   /> booking.show
+#      /-----------\
+#      0 0 X _ 0 0 0
+#      0 X X _ 0 0 0
+#      0 0 0 _ X 0 0
+#      0 0 0 _ 0 0 0
+#      ...
+#      \-----------/
+#   => nil
+#
+#  @params [String] seat_position
+#  @return nil
+booking.show
+```
 
 You should:
 
-- Provide a the source code, some description about the design decision and the instruction about how to execute the it.
+- Add information about your design decision.
 - Write production-ready code.
-- Design the code in order to be extensible.
+- Design the code in order to be extensible (for example to support different airplanes).
+- Suggest possible enhancements
+- Provide a the source code and the description about how to execute the code.
