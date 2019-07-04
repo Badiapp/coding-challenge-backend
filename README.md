@@ -62,6 +62,7 @@ booking.unbook!(seat_position)
 # Show the plane status printing in console the grid of the seats printing `0`
 # for empty seats and `X` for booked. The aisle will be showed with the `_`
 # symbol.
+# It should return an Array where each element is a raw like shown in console.
 #
 # Example:
 #   /> booking.show
@@ -75,7 +76,7 @@ booking.unbook!(seat_position)
 #   => nil
 #
 #  @params [String] seat_position
-#  @return nil
+#  @return Array
 booking.show
 ```
 
