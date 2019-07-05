@@ -84,6 +84,6 @@ You should:
 
 - Add information about your design decision.
 - Write production-ready code.
-- Design the code in order to be extensible (for example to support different airplanes).
+- Design the code in order to be extensible.
 - Suggest possible enhancements
-- Provide a the source code and the description about how to execute the code.
+- Provide the source code with all the git history and the description about how to execute the code.
