@@ -80,6 +80,52 @@ booking.unbook!(seat_position)
 booking.show
 ```
 
+We want to enhance the user experience allowing the user to make a multiple places booking and have the places booked nearby. The API to support the multiple places booking will accept the number of plcaes to book (up to 8 and) and the name of the user, then it will return the position of the places booked.
+The logic to booke the place nearby follows this rules:
+
+1) if the places can all fit inside a lane, they will be booked in the same row:
+ex.
+```ruby
+  booking.book_multiple("marco", 3)
+
+  # X X X _ 0 0 0
+  # 0 0 0 _ 0 0 0
+```
+
+2) if the places don't fit inside a lane, they will be balance across rows:
+ex.
+```ruby
+  booking.book_multiple("marco", 4)
+
+  # 0 X X _ 0 0 0
+  # 0 X X _ 0 0 0
+```
+
+3) if the pane is full and they cannot be balanced across rows, they will booked across the aisle:
+ex.
+```ruby
+  booking.book_multiple("marco", 4)
+
+  # 0 0 X _ X 0 0
+  # 0 0 X _ X 0 0
+```
+
+The API interface is
+
+```ruby
+# Check if a seat position is booked
+#
+# Example:
+#   /> booking.book_multiple('marco', 4)
+#   => ['A3', 'A4', 'B3', 'B4']
+#
+#  @params [String] passenger_name
+#  @params [Integer] number_of_booking (from 1 to 8)
+#  @return [Boolean]
+
+booking.book_multiple(passenger_name, number_of_booking)
+```
+
 You should:
 
 - Add information about your design decision.
