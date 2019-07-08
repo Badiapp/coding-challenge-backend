@@ -2,36 +2,69 @@
 
 Badi flight company needs to add a booking system to the current application.
 
-Our fleet is composed by 2 types of aircraft:
-
+Currently the Badi fleet is composed only by a short range plane that has the following characteristics:
 
 | Aircraft Type | Sits Count  | Rows        | Row Arrangement          |
 |---------------|-------------|-------------|--------------------------|
 | :short_range  | 156         | 26          | A B C _ D E F            |
-| :long_range   | 360         | 36          | A B C _ D E F G _ H I J  |
 
 
-The task is to write the logic that describe the booking service.
+The service:
 
-The booking service should be versatile to be working for both `:short_range` and `:long_range` flights
+- Doesn't have any database support.
+- Should be designed to expose an interface that allows separate components to interact with it.
 
-The booking system allows to receive a multiple seats request.
+The API should support a multiple seats booking, expecting the name of the passenger and the number of places to book (up to 8). As result it will return the positions of all the places booked.
 
-When the service receives a multiple seats request, it should chose the seats following the rules described below:
+The booking logic has the following rules:
 
-- If the number of person is inferior of the lane size, you should sit them all in line
-- [Optional] If the number of person is greater then the lane size, you should place the seat nearby on multiple lanes. (Ex. for a short range airplane if we book 4 places they can be set an B1, C1, B2, C2)
+1) If the places can all fit on a row without crossing the aisle, they will be booked in the same row. _(ex. ['A1', 'B1', 'C1'] or ['E1', 'F1'])_
+2) If the places don't fit on a row without crossing the aisle, they will be balanced across rows. _(ex. ['A1', 'B1', 'A2', 'B2'])_
+3) If there are not available places and the seats cannot be arranged all across rows, they will be booked to be nearby across the aisle. _(ex. ['C1', 'D1', 'C2', 'D2'])_
+4) If none of the above rules are appliable, position the seat on a random place.
+5) The booking should start from the window seats, when possible.
 
-The service should expose the following interface:
 
-- Create new booking.
-- Book one or more seats.
-- Show if the give seat is booked.
-- Cancel a booking from the given booking reference.
-- Show the seats disposition.
+Here you can find an interface example:
+```ruby
+booking = Booking.new(plane)
+
+booking.book('Marco', 4)
+booking.book('Gerard', 2)
+
+booking.show
+```
+
+Given an empty plane, those are the expected behaviours.
+```
+Bookings: 
+  * Marco: 4 people;
+  * Gerard: 2 people;
+Result: 
+  * Marco seats: 'A1', 'B1', 'A2', 'B2'; 
+  * Gerard seats: 'D1', 'E1';
+
+Bookings: 
+  * Iosu: 2 people;
+  * Oriol: 5 people;
+  * David: 2 people;
+Result: 
+  * Iosu seats: 'A1', 'B1'; 
+  * Oriol seats: 'D1', 'E1', 'F1', 'E2', 'F2'; 
+  * David seats: 'A2', 'B2'; 
+
+Bookings: 
+  * Iosu: 2 people;
+  * Gerard: 2 people;
+Result: 
+  * Iosu seats: 'A1', 'B1'; 
+  * Gerard seats: 'E1', 'F1'; 
+```
 
 You should:
 
-- Provide a the source code, some description about the design decision and the instruction about how to execute the it.
+- Add information about your design decision.
 - Write production-ready code.
 - Design the code in order to be extensible.
+- Suggest possible enhancements.
+- Provide the source code with all the git history and the description about how to execute the code.
