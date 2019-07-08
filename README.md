@@ -34,7 +34,7 @@ booking.book('Gerard', 2)
 booking.show
 ```
 
-The expected behavior from the booking.
+Given an empty plane, here are some expected behavior for the booking.
 ```
 Bookings: 
   * Marco: 4 people;
