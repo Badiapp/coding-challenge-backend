@@ -51,6 +51,13 @@ Result:
   * Iosu seats: 'A1', 'B1'; 
   * Oriol seats: 'D1', 'E1', 'F1', 'E2', 'F2'; 
   * David seats: 'A2', 'B2'; 
+
+Bookings: 
+  * Iosu: 2 people;
+  * Gerard: 2 people;
+Result: 
+  * Iosu seats: 'A1', 'B1'; 
+  * Gerard seats: 'E1', 'F1'; 
 ```
 
 You should:
