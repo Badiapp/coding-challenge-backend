@@ -37,28 +37,28 @@ booking.show
 
 Given an empty plane, those are the expected behaviours.
 ```
-Bookings: 
+Bookings:
   * Marco: 4 people;
   * Gerard: 2 people;
-Result: 
-  * Marco seats: 'A1', 'B1', 'A2', 'B2'; 
-  * Gerard seats: 'D1', 'E1';
+Result:
+  * Marco seats: 'A1', 'B1', 'A2', 'B2';
+  * Gerard seats: 'E1', 'F1'; 
 
-Bookings: 
+Bookings:
   * Iosu: 2 people;
   * Oriol: 5 people;
   * David: 2 people;
-Result: 
-  * Iosu seats: 'A1', 'B1'; 
-  * Oriol seats: 'D1', 'E1', 'F1', 'E2', 'F2'; 
-  * David seats: 'A2', 'B2'; 
+Result:
+  * Iosu seats: 'A1', 'B1';
+  * Oriol seats: 'D1', 'E1', 'F1', 'E2', 'F2';
+  * David seats: 'A2', 'B2';
 
-Bookings: 
+Bookings:
   * Iosu: 2 people;
   * Gerard: 2 people;
-Result: 
-  * Iosu seats: 'A1', 'B1'; 
-  * Gerard seats: 'E1', 'F1'; 
+Result:
+  * Iosu seats: 'A1', 'B1';
+  * Gerard seats: 'E1', 'F1';
 ```
 
 You should:
